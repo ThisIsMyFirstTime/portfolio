@@ -2,12 +2,18 @@ import requests
 
 
 class WeatherAPI:
-    API_KEY = 'c077415b0bf4406b9fd223106230702'
+    def __init__(self, api_key, location):
+        self.url = 'https://api.weatherapi.com/v1/current.json?key=' + str(api_key) + "&q=" + str(location)
 
-    base_url = 'https://api.weatherapi.com/v1/c077415b0bf4406b9fd223106230702/current.json'
+    def response(self):
+        return requests.get(self.url)
 
-    def __init__(self):
-        self.response = requests.get(self.base_url)
+    def to_dict(self):
+        return self.response().json()
+
+
+
+
 
 
 if __name__ == '__main__':

@@ -1,8 +1,9 @@
-from api.api import MeteomaticsAPI
+from api_connection import WeatherAPI
 
 
 if __name__ == "__main__":
-
-    MeteomaticsAPI(validdatetime='2023-02-03T00:00:00Z', parameters='t_2m:C', locations='32.705002,-97.122780', format='json')
-
+    API_KEY = 'c077415b0bf4406b9fd223106230702'
+    location = '76017'
+    weather = WeatherAPI(API_KEY, location)
+    print(weather.to_dict()['current']['condition'])
 
