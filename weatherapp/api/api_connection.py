@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 
 
@@ -16,11 +16,11 @@ class WeatherAPI:
         return self.response.json()
 
     @property
-    def current_temp(self):
+    def temp(self):
         return self.to_dict['current']['temp_f']
 
     @property
-    def current_condition(self):
+    def condition(self):
         return self.to_dict['current']['condition']['text']
 
     @property
@@ -34,9 +34,27 @@ class WeatherAPI:
 
 
 class ForecastAPI(WeatherAPI):
-    def __init__(self, api_key, location, days=None):
+    def __init__(self, api_key, location, days=None, hour=None):
         super().__init__(api_key, location)
-        self.url = 'https://api.weatherapi.com/v1/forecast.json?key=' + str(api_key) + '&q=' + str(location) + '&days=' + str(days)
+        self.url = 'https://api.weatherapi.com/v1/forecast.json?key='
+        self.url += str(api_key) + '&q=' + str(location) + '&days=' + str(days) + '&hour=' + str(hour)
+
+    @property
+    def temp(self):
+        return self.to_dict['forecast']['forecastday'][1]['hour']
+
+    @property
+    def condition(self):
+        return self.to_dict['forecast']['condition']['text']
+
+    @property
+    def icon_url(self):
+        return self.to_dict['forecast']['condition']['icon']
+
+    @property
+    def raw_image(self):
+        url = 'https:' + self.icon_url
+        return requests.get(url, stream=True).raw
 
 
 class NotScriptError(Exception):

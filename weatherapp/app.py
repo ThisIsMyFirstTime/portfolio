@@ -6,8 +6,6 @@ if __name__ == "__main__":
     location = '76017'
     weather = WeatherAPI(API_KEY, location)
     forecast = ForecastAPI(API_KEY, location, 2)
-    print(weather.to_dict['current'])
-    print(weather.current_temp)
-    for i in forecast.to_dict['forecast']['forecastday']:
-        print(i['day'])
+    for i in forecast.temp:
+        print(i)
 
