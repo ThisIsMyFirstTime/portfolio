@@ -1,4 +1,4 @@
-from api_connection import WeatherAPI
+from api.api_connection import WeatherAPI
 
 
 if __name__ == "__main__":
@@ -6,7 +6,7 @@ if __name__ == "__main__":
     location = '76017'
     weather = WeatherAPI(API_KEY, location)
     print(weather.to_dict['current']['condition'])
-    weather.current_condition_icon
+    weather.icon_url
+    print(weather.current_temp)
     weather.image_grab()
-
 

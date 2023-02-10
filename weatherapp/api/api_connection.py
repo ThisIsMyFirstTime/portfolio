@@ -1,4 +1,6 @@
 import requests
+from PIL import Image
+
 
 class WeatherAPI:
     def __init__(self, api_key, location):
@@ -21,15 +23,13 @@ class WeatherAPI:
         return self.to_dict['current']['condition']['text']
 
     @property
-    def current_condition_icon(self):
+    def icon_url(self):
         return self.to_dict['current']['condition']['icon']
 
-    def image_grab(self):
-        url = "https:" + self.current_condition_icon
-        response = requests.get(url)
-        if response.status_code == 200:
-            with open('weather.json', 'wb') as f:
-                f.write(response.content)
+    @property
+    def raw_image(self):
+        url = 'https:' + self.icon_url
+        return requests.get(url, stream=True).raw
 
 
 class NotScriptError(Exception):
