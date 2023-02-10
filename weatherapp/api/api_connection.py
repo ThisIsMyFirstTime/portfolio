@@ -1,5 +1,6 @@
 import requests
-from PIL import Image
+
+
 
 
 class WeatherAPI:
@@ -32,9 +33,15 @@ class WeatherAPI:
         return requests.get(url, stream=True).raw
 
 
+class ForecastAPI(WeatherAPI):
+    def __init__(self, api_key, location, days=None):
+        super().__init__(api_key, location)
+        self.url = 'https://api.weatherapi.com/v1/forecast.json?key=' + str(api_key) + '&q=' + str(location) + '&days=' + str(days)
+
+
 class NotScriptError(Exception):
     pass
 
 
 if __name__ == '__main__':
-    raise NotScriptError('This is not a script.')
+    raise NotScriptError("This is not a script.")
