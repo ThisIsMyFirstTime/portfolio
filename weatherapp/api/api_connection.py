@@ -1,5 +1,5 @@
 import requests
-import json
+
 
 
 
@@ -39,21 +39,19 @@ class ForecastAPI(WeatherAPI):
         self.url = 'https://api.weatherapi.com/v1/forecast.json?key='
         self.url += str(api_key) + '&q=' + str(location) + '&days=' + str(days) + '&hour=' + str(hour)
 
-    @property
-    def temp(self):
-        return self.to_dict['forecast']['forecastday'][1]['day']['avgtemp_f']
+        self.weather = self.to_dict['forecast']['forecastday']
 
-    @property
-    def condition(self):
-        return self.to_dict['forecast']['condition']['forecastday']['day']['text']
+    def temp_day(self, day: int):
+        return self.weather[day - 1]['day']['avgtemp_f']
 
-    @property
-    def icon_url(self):
-        return self.to_dict['forecast']['forecastday'][1]['day']['condition']['icon']
+    def condition_day(self, day: int):
+        return self.weather[day - 1]['day']['condition']['text']
 
-    @property
-    def raw_image(self):
-        url = 'https:' + self.icon_url
+    def icon_url_day(self, day: int) -> str:
+        return self.weather[day - 1]['day']['condition']['icon']
+
+    def raw_image_day(self, day):
+        url = 'https:' + self.icon_url_day(day)
         return requests.get(url, stream=True).raw
 
 
