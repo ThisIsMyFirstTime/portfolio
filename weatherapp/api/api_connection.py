@@ -41,7 +41,7 @@ class ForecastAPI(WeatherAPI):
 
     @property
     def temp(self):
-        return self.to_dict['forecast']['forecastday'][1]['hour']
+        return self.to_dict['forecast']['forecastday'][1]['day']['avgtemp_f']
 
     @property
     def condition(self):
@@ -49,7 +49,7 @@ class ForecastAPI(WeatherAPI):
 
     @property
     def icon_url(self):
-        return self.to_dict['forecast']['condition']['forecastday']['day']['icon']
+        return self.to_dict['forecast']['forecastday'][1]['day']['condition']['icon']
 
     @property
     def raw_image(self):
